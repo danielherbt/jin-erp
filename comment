@@ -1,0 +1,3 @@
+en la clase personserializer -> userdb = como poner un serializador para mostrar nombres de campos
+de otras tablas
+en el modelo de userdb esta la @property para que aparezca

@@ -19,9 +19,8 @@ class BaseEntityViewSet(BaseViewSet):
     filterset_fields = {
     #'year': ['lte', 'gte'],  # Año menor o igual, mayor o igual que
     'dni' : ['exact'],      # Código exacto
-    'name' : ['contains']
     }
-    search_fields = ['name','dni','id']
+    search_fields = ['name','dni']
     ordering_fields = ['name','dni','id']
 
   
@@ -31,7 +30,6 @@ class BaseTypeViewSet(BaseViewSet):
     filterset_fields = {
     #'year': ['lte', 'gte'],  # Año menor o igual, mayor o igual que
     'code' : ['exact'],      # Código exacto
-    'name' : ['contains']
     }
-    search_fields = ['name','code','id']
+    search_fields = ['name','code']
     ordering_fields = ['name','code','id']

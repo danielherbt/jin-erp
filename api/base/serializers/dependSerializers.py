@@ -44,6 +44,7 @@ class ParallelSerializer(serializers.HyperlinkedModelSerializer):
         model = Parallel
         exclude = ('status','created','updated')   
 
+
 class KindSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Kind

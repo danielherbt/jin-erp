@@ -105,7 +105,17 @@ class Modules(TypesBaseModel):
         return self.name            
 
 class ConnectDb(TypesBaseModel):
-    dbms = models.CharField(verbose_name='DBMS',help_text='Motor de Base de Datos',max_length=50,blank=True,null=True)
+    DBMS = (
+    ('Mysql','Mysql'),
+    ('Postgres','Postgres'),
+    ('Sqlite','Sqlite'),
+    ('Oracle','Oracle'),
+    ('SqlServer', 'SqlServer'),
+    ('Otro', 'Otro')
+    )
+
+    code = models.CharField(verbose_name='Host', max_length=50,help_text='Servidor',blank=False,null=False)
+    dbms = models.CharField(verbose_name='DBMS',help_text='Motor de Base de Datos',max_length=50,blank=False,null=False,choices=DBMS,default='Mysql')
     port = models.CharField(verbose_name='Puerto',help_text='Puerto de la Base de Datos',max_length=7,blank=True,null=True)
     user = models.CharField(verbose_name='Usuario',help_text='Usuario de la Base de Datos',max_length=50,blank=True,null=True)
     passw = models.CharField(verbose_name='Password',help_text='Clave de la Base de Datos',max_length=20,blank=True,null=True)
@@ -120,9 +130,16 @@ class ConnectDb(TypesBaseModel):
         return self.name    
 
 class UsersDb(TypesBaseModel):
+
     company = models.ForeignKey(Company, verbose_name='Compania', help_text='Compania a la que pertenece',on_delete=models.RESTRICT)
-    user = models.ForeignKey(User,verbose_name='Usuario', help_text='Usuario del Sistema',on_delete=models.RESTRICT)
+    user = models.ForeignKey(User,verbose_name='Usuario', help_text='Usuario del Sistema',on_delete=models.RESTRICT,related_name='user')
     connect = models.ForeignKey(ConnectDb, verbose_name='Conexion', help_text='Perfil de Conexion',on_delete=models.RESTRICT)
+
+    name = models.CharField(verbose_name='Nombre', max_length=100,help_text='Nombre de la Base de Datos',blank=False,null=False,unique=False)
+    code = models.CharField(verbose_name='Código', max_length=50,help_text='Código Único (Usuario+BD)',unique=True,blank=False,null=False)
+    
+    list_display = (name,code,user,connect)
+    
     class Meta:
         """Meta definition for BaseModel."""
         verbose_name = 'Usuario BD'
@@ -131,6 +148,14 @@ class UsersDb(TypesBaseModel):
 
     def __str__(self):
         return self.name  
+
+    @property
+    def company_name(self):
+        return self.company.name
+
+    @property
+    def user_name(self):
+        return self.user.username        
 
 class Partner(EntityBaseModel):
     term = models.IntegerField(help_text='Plazo de Crédito en dias',verbose_name='Plazo',default=0)
