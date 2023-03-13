@@ -135,11 +135,9 @@ class UsersDb(TypesBaseModel):
     user = models.ForeignKey(User,verbose_name='Usuario', help_text='Usuario del Sistema',on_delete=models.RESTRICT,related_name='user')
     connect = models.ForeignKey(ConnectDb, verbose_name='Conexion', help_text='Perfil de Conexion',on_delete=models.RESTRICT)
 
-    name = models.CharField(verbose_name='Nombre', max_length=100,help_text='Nombre de la Base de Datos',blank=False,null=False,unique=False)
+    name = models.CharField(verbose_name='Base de Datos', max_length=100,help_text='Nombre de la Base de Datos',blank=False,null=False,unique=False)
     code = models.CharField(verbose_name='Código', max_length=50,help_text='Código Único (Usuario+BD)',unique=True,blank=False,null=False)
-    
-    list_display = (name,code,user,connect)
-    
+
     class Meta:
         """Meta definition for BaseModel."""
         verbose_name = 'Usuario BD'
@@ -155,8 +153,9 @@ class UsersDb(TypesBaseModel):
 
     @property
     def user_name(self):
-        return self.user.username        
+        return self.user.username  
 
+  
 class Partner(EntityBaseModel):
     term = models.IntegerField(help_text='Plazo de Crédito en dias',verbose_name='Plazo',default=0)
     percent_discount = models.DecimalField(max_digits=5,decimal_places=2,help_text='Porcentaje de Descuento',verbose_name='Descuento',default=0)

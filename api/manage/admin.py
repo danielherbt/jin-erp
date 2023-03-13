@@ -12,4 +12,8 @@ admin.site.register(Subsidiary)
 admin.site.register(Modules)
 admin.site.register(ConnectDb)
 admin.site.register(Genre)
-admin.site.register(UsersDb)
+
+class UserDbAdmin(admin.ModelAdmin):
+    list_display = ('code','name','user','connect')
+    search_fields = ('name', 'user')
+admin.site.register(UsersDb,UserDbAdmin)
