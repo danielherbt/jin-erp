@@ -136,7 +136,7 @@ class UsersDb(TypesBaseModel):
     connect = models.ForeignKey(ConnectDb, verbose_name='Conexion', help_text='Perfil de Conexion',on_delete=models.RESTRICT)
 
     name = models.CharField(verbose_name='Base de Datos', max_length=100,help_text='Nombre de la Base de Datos',blank=False,null=False,unique=False)
-    code = models.CharField(verbose_name='Código', max_length=50,help_text='Código Único (Usuario+BD)',unique=True,blank=False,null=False)
+    code = models.SlugField(verbose_name='Código', max_length=50,help_text='Código Único (Usuario-Conexion-Compania-BaseDatos)',unique=True,blank=False,null=False)
 
     class Meta:
         """Meta definition for BaseModel."""
@@ -146,6 +146,17 @@ class UsersDb(TypesBaseModel):
 
     def __str__(self):
         return self.name  
+    ### Grabar en otro campo los valores de otro
+    """ def save(self, *args, **kwargs):
+        self.code = (self.user.username + '/' + self.connect.name + '/' + self.name)
+        return super(UsersDb, self).save(*args, **kwargs)  """   
+
+    ### Desplegar atributos de tabla relacionada
+    # def connection(self):
+    #     try:
+    #         return u'%s' % self.connect.code
+    #     except ConnectDb.DoesNotExist:
+    #         return u'No Conexión'  
 
     @property
     def company_name(self):

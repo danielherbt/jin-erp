@@ -22,7 +22,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 BASE_APPS = [
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -43,6 +43,8 @@ THIRD_APPS = [
     'simple_history',
     'django_filters',
     'drf_spectacular',
+    'material',
+    'material.admin',
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCALS_APPS + THIRD_APPS
